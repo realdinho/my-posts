@@ -1,8 +1,8 @@
 const express = require('express')
 const mongodb = require('mongodb')
+const { mongoURI } = require('./../../../config')
 
 const router = express.Router()
-
 
 // get post
 router.get('/', async (req, res) => {
@@ -28,9 +28,8 @@ router.delete('/:id', async (req, res) => {
 })
 
 const loadPostsCollection = async() => {
-  const client = await mongodb.MongoClient.connect('mongodb+srv://rdias:realdinho90@cluster0.l2pll.mongodb.net/postsdb?authSource=admin&replicaSet=atlas-u2oikw-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true', {
-    useNewUrlParser: true
-  })
+  const client = await mongodb.MongoClient.connect(mongoURI, { useNewUrlParser: true })
+
   return client.db('postsdb').collection('posts')
 }
 
